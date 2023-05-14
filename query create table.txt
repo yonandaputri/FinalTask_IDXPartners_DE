@@ -1,0 +1,32 @@
+# Query create table
+CREATE TABLE DimCustomer (
+	CustomerId int PRIMARY KEY NOT NULL,
+	CustomerName varchar(50) NOT NULL,
+	Age int NOT NULL,
+	Gender varchar(50) NOT NULL,
+	City varchar(50) NOT NULL,
+	NoHp varchar(50) NOT NULL
+);
+
+CREATE TABLE DimProduct (
+	ProductId int PRIMARY KEY NOT NULL,
+	ProductName varchar(255) NOT NULL,
+	ProductCategory varchar(255) NOT NULL,
+	ProductUnitPrice int
+);
+
+CREATE TABLE DimStatusOrder (
+	StatusId int PRIMARY KEY NOT NULL,
+	StatusOrder varchar(50) NOT NULL,
+	StatusOrderDesc varchar(50) NOT NULL
+);
+
+CREATE TABLE FactSalesOrder (
+	OrderId int PRIMARY KEY NOT NULL,
+	CustomerId int NOT NULL FOREIGN KEY REFERENCES DimCustomer(CustomerId),
+	ProductId int NOT NULL FOREIGN KEY REFERENCES DimProduct(ProductId),
+	Quantity int NOT NULL,
+	Amount int NOT NULL,
+	StatusId int NOT NULL FOREIGN KEY REFERENCES DimStatusOrder(StatusId),
+	OrderDate date NOT NULL
+);

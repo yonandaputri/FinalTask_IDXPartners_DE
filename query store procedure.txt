@@ -1,0 +1,16 @@
+# Query store procedure
+CREATE PROCEDURE dbo.summary_order_status
+(
+	@StatusID int
+)
+AS
+BEGIN
+	SELECT FSO.OrderId, DC.CustomerName, DP.ProductName, FSO.Quantity, DSO.StatusOrder 
+	FROM FactSalesOrder AS FSO
+	JOIN DimCustomer AS DC ON FSO.CustomerId = DC.CustomerId
+	JOIN DimProduct AS DP ON FSO.ProductId = DP.ProductId
+	JOIN DimStatusOrder AS DSO ON FSO.StatusId = DSO.StatusId
+	WHERE DSO.StatusId = @StatusID
+END;
+
+EXEC dbo.summary_order_status @StatusID = 2;
